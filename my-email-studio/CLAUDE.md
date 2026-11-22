@@ -12,3 +12,6 @@ This studio plans and writes email campaigns for a small business (Kettlebird Te
 - Write in plain English.
 - Never send email to real people.
 - Ask me before deleting anything.
+
+## Brand
+@brand/voice.md
