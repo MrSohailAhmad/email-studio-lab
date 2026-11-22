@@ -43,6 +43,7 @@ const run = spawnSync("claude", [
 if (run.error || run.status !== 0) {
   console.error(`Review failed: claude exited with ${run.status ?? run.error?.message}`);
   if (run.stderr) console.error(run.stderr.trim());
+  if (run.stdout) console.error(run.stdout.trim().slice(0, 800));
   process.exit(2);
 }
 
@@ -58,6 +59,7 @@ const result = Array.isArray(parsed) ? parsed[parsed.length - 1] : parsed;
 const structured = result?.structured_output;
 if (!structured || !Array.isArray(structured.findings)) {
   console.error("Review failed: no structured_output.findings in claude result.");
+  console.error(`subtype=${result?.subtype} is_error=${result?.is_error} result=${String(result?.result ?? "").slice(0, 500)}`);
   process.exit(2);
 }
 

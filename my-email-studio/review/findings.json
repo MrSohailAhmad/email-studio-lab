@@ -1,0 +1,61 @@
+{
+  "folder": "campaigns/test-bad",
+  "findings": [
+    {
+      "file": "campaigns/test-bad/emails/01-bad.md",
+      "line": 1,
+      "severity": "high",
+      "problem": "Subject line uses banned words ('LAST CHANCE', 'detox', 'miracle') and is 52 characters, exceeding the 50-character limit.",
+      "fix": "Rewrite subject to ≤50 chars, remove 'last chance', 'detox', and 'miracle'."
+    },
+    {
+      "file": "campaigns/test-bad/emails/01-bad.md",
+      "line": 2,
+      "severity": "high",
+      "problem": "Preview line 'Hurry, act now' uses two banned phrases ('hurry', 'act now').",
+      "fix": "Replace with a calm, curiosity-led preview line that fits the warm/quiet brand voice."
+    },
+    {
+      "file": "campaigns/test-bad/emails/01-bad.md",
+      "line": 7,
+      "severity": "high",
+      "problem": "Body makes two prohibited health claims: 'detox your body' and 'help you lose weight'.",
+      "fix": "Remove both claims entirely. No health or weight claims are permitted under any circumstances."
+    },
+    {
+      "file": "campaigns/test-bad/emails/01-bad.md",
+      "line": 7,
+      "severity": "high",
+      "problem": "'guaranteed' is a banned word.",
+      "fix": "Remove 'guaranteed'."
+    },
+    {
+      "file": "campaigns/test-bad/emails/01-bad.md",
+      "line": 6,
+      "severity": "high",
+      "problem": "'This is your last chance' is fake urgency — a banned phrase and a prohibited claim.",
+      "fix": "Remove the sentence."
+    },
+    {
+      "file": "campaigns/test-bad/emails/01-bad.md",
+      "line": 8,
+      "severity": "high",
+      "problem": "Two links present ([Buy now] and [Or click here]). Emails must have exactly one main link.",
+      "fix": "Keep only one link: [Button text](https://kettlebird.example/steep-club). Remove the second link."
+    },
+    {
+      "file": "campaigns/test-bad/emails/01-bad.md",
+      "line": 11,
+      "severity": "medium",
+      "problem": "Sign-off is 'Thanks' instead of the required brand sign-off.",
+      "fix": "Replace with:\nSteep well,\nThe Kettlebird team"
+    },
+    {
+      "file": "campaigns/test-bad/emails/01-bad.md",
+      "line": 11,
+      "severity": "medium",
+      "problem": "Required two-line footer is missing entirely.",
+      "fix": "Append after the sign-off:\nYou're getting this because you joined the Kettlebird Tea waitlist.\nKettlebird Tea, {{company_address}} · Unsubscribe: {{unsubscribe_url}}"
+    }
+  ]
+}

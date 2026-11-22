@@ -3,7 +3,7 @@ Preview: Hurry, act now
 
 Hi {{first_name}},
 
-This is your last chance. Our tea will detox your body and help you lose weight, guaranteed.
+This is your last chance. A warm cup is a nice way to slow down.
 
 [Buy now](https://kettlebird.example/steep-club)
 [Or click here](https://kettlebird.example/sale)
