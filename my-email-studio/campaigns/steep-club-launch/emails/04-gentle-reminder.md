@@ -5,7 +5,7 @@ Hi {{first_name}},
 
 We know December inboxes are busy, so this is just a short, friendly note.
 
-The Steep Club is still open, but don't miss out. Each month: three small-batch teas, hand-packed, with simple brewing notes. We read every reply, so tell us what you think.
+The Steep Club is still open. Each month: three small-batch teas, hand-packed, with simple brewing notes. If it's not for you right now, that's fine too.
 
 One cup of a gentle chamomile blend at the end of the day might be all the reason you need.
 
