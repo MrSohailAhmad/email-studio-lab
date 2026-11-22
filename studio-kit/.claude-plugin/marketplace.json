@@ -1,0 +1,14 @@
+{
+  "name": "studio-kit-marketplace",
+  "owner": {
+    "name": "Email Studio Lab"
+  },
+  "plugins": [
+    {
+      "name": "studio-kit",
+      "source": "./",
+      "description": "Reusable email studio tools.",
+      "version": "0.1.0"
+    }
+  ]
+}
