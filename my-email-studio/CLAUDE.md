@@ -11,6 +11,7 @@ This studio plans and writes email campaigns for a small business (Kettlebird Te
 ## Rules
 - Write in plain English.
 - Never send email to real people.
+- Sending through Resend is allowed only to Resend's test addresses (ending in @resend.dev) and to my own email address (MY_EMAIL). A send guard hook enforces this.
 - Ask me before deleting anything.
 
 ## Brand
