@@ -11,7 +11,8 @@ This studio plans and writes email campaigns for a small business (Kettlebird Te
 ## Rules
 - Write in plain English.
 - Never send email to real people.
-- Sending through Resend is allowed only to Resend's test addresses (ending in @resend.dev) and to my own email address (MY_EMAIL). A send guard hook enforces this.
+- Practice sends go only to @example.com and @resend.dev addresses. Mailroom's guard decides (`mailroom guard`, called by the send-guard hook).
+- Every email under campaigns/ is checked by `mailroom check` when it is saved. Fixed rules are checked by Mailroom. Claude handles the judgment: if Mailroom reports a problem, stop and ask me.
 - Ask me before deleting anything.
 
 ## Brand

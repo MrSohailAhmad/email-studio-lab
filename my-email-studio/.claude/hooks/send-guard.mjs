@@ -1,62 +1,31 @@
 #!/usr/bin/env node
 // PreToolUse guard for the resend MCP server.
-// Exit 0 = allow. Exit 2 = block (stderr is shown to Claude as the reason).
+// Bulk tools are always blocked here. Every other call is passed to `mailroom guard`,
+// which holds the one tested copy of the recipient rule. Exit 2 blocks the call.
 import { readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 
-const BULK_TOOLS = new Set([
-  "send-broadcast",
-  "create-automation",
-  "send-inbox-draft",
-  "send-new-inbox-email",
-]);
-const SEND_TOOLS = new Set(["send-email", "send-batch-emails"]);
+const BULK_TOOLS = new Set(["send-broadcast", "create-automation", "send-inbox-draft", "send-new-inbox-email"]);
 
-function block(reason) {
-  process.stderr.write(`Send guard: ${reason}\n`);
+const input = readFileSync(0, "utf8");
+let call = {};
+try {
+  call = JSON.parse(input || "{}");
+} catch {
+  process.stderr.write("Send guard: could not read the tool call, so it was blocked to be safe.\n");
   process.exit(2);
 }
 
-let call;
-try {
-  call = JSON.parse(readFileSync(0, "utf8") || "{}");
-} catch {
-  block("could not read the tool call, so it was blocked to be safe.");
-}
-
-const toolName = String(call.tool_name || "");
-const shortName = toolName.replace(/^mcp__resend__/, "");
-const input = call.tool_input || {};
-const myEmail = (process.env.MY_EMAIL || "").trim().toLowerCase();
-
+const shortName = String(call.tool_name || "").replace(/^mcp__resend__/, "");
 if (BULK_TOOLS.has(shortName)) {
-  block(`${shortName} is always blocked because it can reach whole lists of people.`);
+  process.stderr.write(`Send guard: ${shortName} is always blocked because it can reach whole lists of people.\n`);
+  process.exit(2);
 }
 
-if (!SEND_TOOLS.has(shortName)) process.exit(0);
-
-function addresses(value) {
-  if (!value) return [];
-  if (Array.isArray(value)) return value.flatMap(addresses);
-  if (typeof value === "object") return addresses(value.email || value.address);
-  return String(value)
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean)
-    .map((s) => (s.match(/<([^>]+)>/)?.[1] || s).trim().toLowerCase());
+const run = spawnSync("mailroom", ["guard"], { input, encoding: "utf8" });
+if (run.error) {
+  process.stderr.write("Send guard: mailroom is not installed, so the send was blocked. Install: uv tool install git+https://github.com/MrSohailAhmad/mailroom@v1.1\n");
+  process.exit(2);
 }
-
-const messages = shortName === "send-batch-emails"
-  ? (Array.isArray(input.emails) ? input.emails : Array.isArray(input) ? input : [input])
-  : [input];
-
-for (const msg of messages) {
-  for (const field of ["to", "cc", "bcc"]) {
-    for (const addr of addresses(msg?.[field])) {
-      const ok = addr.endsWith("@resend.dev") || (myEmail && addr === myEmail);
-      if (!ok) {
-        block(`${addr} is not a test address (@resend.dev) or your own email (MY_EMAIL), so this send was blocked.`);
-      }
-    }
-  }
-}
-process.exit(0);
+if (run.stderr) process.stderr.write(run.stderr);
+process.exit(run.status === 0 ? 0 : 2);
